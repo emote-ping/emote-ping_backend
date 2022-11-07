@@ -38,12 +38,14 @@ def sum_sample_space(predictions:List) -> List:
             emotions.append([1, val['emotion']])
         else:
             for emote in emotions:
-                if emote == val['emotion']:
-                    emote[1] += 1
+                if emote[1] == val['emotion']:
+                    emote[0] += 1
     return sorted(emotions, reverse=True)
 
 def predict_top_3(predictions:List) -> tuple:
     vals = sum_sample_space(predictions=predictions)
+    
+    print(vals)
 
     return vals[0][1], vals[1][1], vals[2][1]
 
