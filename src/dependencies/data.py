@@ -1,11 +1,4 @@
-import matplotlib.pyplot as plt
 from typing import List
-import numpy as np
-from sklearn import datasets
-from sklearn.decomposition import PCA
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-
 
 
 temp_mapping = {
@@ -17,7 +10,6 @@ temp_mapping = {
 }
 
 dim1, dim2 = 'arousal', 'valence'
-iris = datasets.load_iris()
 
 def parseData(data:List, vIndex:int, aIndex:int) -> List:
     newData = []
@@ -25,7 +17,7 @@ def parseData(data:List, vIndex:int, aIndex:int) -> List:
         newData.append((values[vIndex + 2],values[aIndex + 2])) # (valence, arousal)
     return newData
 
-def formatEndOfList(data:list):
+def formatEndOfList(data:list) -> List:
     lastVal = data[-1]
     data = data[:-1]
     start = lastVal.find('"')
@@ -36,7 +28,7 @@ def formatEndOfList(data:list):
         data.append(val)
     return data
 
-def is_float(num):
+def is_float(num) -> bool:
     try:
         float(num)
         return True
@@ -59,7 +51,7 @@ def reformatList(data:List, emotion_index) -> List:
 
 def read_csv():
     data = []
-    with open('./src/dependencies/dte_exp1.csv', 'r') as rFile:
+    with open('src/dependencies/dte_exp1.csv', 'r') as rFile:
         data = rFile.readlines()
         guidlines = data[0].strip().replace(',', '-').split('-')
         val_index, arou_index, emot_index = guidlines.index('valence'), guidlines.index('arousal'), guidlines.index('emotion')
@@ -68,8 +60,16 @@ def read_csv():
     value = parseData(data, val_index, arou_index)
     return data, guidlines
 
+    
+def dropSets(data:List) -> List:
+    simplified_data = []
+    for value in data:
+        if value.get('response') == 5:
+            simplified_data.append(value)
+    data = simplified_data
+    return data
 
-def convert_dict():
+def convert_dict() -> List:
     # This is so we can set this with **kwargs
     values, keys = read_csv()
     dict_values = []
@@ -81,47 +81,6 @@ def convert_dict():
             else:
                 emptyDict[keys[index]] = value[index]
         dict_values.append(emptyDict)
+    dict_values = dropSets(dict_values)
     return dict_values
 
-
-def myplot(x_axis, y_axis, coeff, labels=None):
-    xs = x_axis
-    ys = y_axis
-    n = coeff.shape[0]
-
-    scalex = 1.0 / (xs.max() - xs.min())
-    scaley = 1.0 / (ys.max() - ys.min())
-    plt.scatter(xs * scalex, ys * scaley, c=y)
-    for i in range(n):
-        plt.arrow(0, 0, coeff[i, 1], color='r', alpha=0.5)
-        if not labels:
-            plt.text(coeff[i, 0] * 1.15, coeff[i, 1] * 1.15, f"var{i+1}", color='g', ha='center', va='center')
-        else:
-            plt.text(coeff[i, 0] * 1.15, coeff[i, 1] * 1.15, label[i], color='g', ha='center', va='center')
-        plt.xlim(-4, 4)
-        plt.ylim(-4, 4)
-        plt.xlabel('Valence')
-        plt.ylabel('Arousal')
-        plt.grid()
-
-def create_graph():
-    dict_values = convert_dict()
-    valence = list()
-    temp = list()
-    arousal = list()
-    for val in dict_values:
-        valence.append(val.get(dim2))
-        arousal.append(val.get(dim1))
-        temp.append(val.get('temp_cat'))
-    
-    scaler = StandardScaler()
-    data = [valence, arousal]
-    scaler.fit(data)
-    valence = scaler.transform(data)
-    pca = PCA(n_components=2)
-    x_new = pca.fit_transform(temp)
-
-    myplot(x_new, np.transpose(pca.components_[0:1, :]))
-    plt.show
-
-create_graph()

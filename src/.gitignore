@@ -1,0 +1,5 @@
+./data_extraction/apple_health_export/*
+*/**/.env/
+*/**/__pycache__/
+*/**/*.pyc
+*/**/*.swp
