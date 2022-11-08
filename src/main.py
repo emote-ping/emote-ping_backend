@@ -28,23 +28,33 @@ from data_extraction.predict_emotion import determine_temp, constrain_temp_cat, 
 
 def create_user(language='English', hr=97.2):
     return user_data(language=language, resting_hr=hr)
-    
 
+
+def promptZipcode():
+    zipcode = str(input("Please enter a zipcode -> "))
+    return zipcode
+
+def cont():
+    again = str(input("Would you like to try another -> "))
+    return again == 'y'
 
 
 if __name__ == '__main__':
     user = create_user()
     # extract_heart_rate()
-    lat, lon = get_lon_and_lat('30088')
-    temper = get_current_weather(lat, lon)
-    temper = determine_temp(orig_temp=temper)
-    constraints = constrain_temp_cat(temper=temper)
-    predictions = predict_top_3(predictions=constraints)
+    again = True
+    while again:
+        z_code = promptZipcode()
+        lat, lon = get_lon_and_lat(z_code)
+        temper = get_current_weather(lat, lon)
+        temper = determine_temp(orig_temp=temper)
+        constraints = constrain_temp_cat(temper=temper)
+        predictions = predict_top_3(predictions=constraints)
 
-    print(f"""You must be feeling one of the three sets of emotions below:
-        1. {predictions[0]}
-        2. {predictions[1]}
-        3. {predictions[2]}
-    """)
-    
+        print(f"""You must be feeling one of the three sets of emotions below:
+            1. {predictions[0]}
+            2. {predictions[1]}
+            3. {predictions[2]}
+        """)
+        again = cont()
     

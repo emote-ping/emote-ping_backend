@@ -44,9 +44,6 @@ def sum_sample_space(predictions:List) -> List:
 
 def predict_top_3(predictions:List) -> tuple:
     vals = sum_sample_space(predictions=predictions)
-    
-    print(vals)
-
     return vals[0][1], vals[1][1], vals[2][1]
 
 
