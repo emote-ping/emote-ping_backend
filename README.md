@@ -17,5 +17,7 @@ Science and inventions such as Mood Rings and experiment data have proven that t
 [NSL](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8174739/#:~:text=First%2C%20emotions%20can%20have%20a,raise%20the%20internal%20body%20temperature)
 
 ## Future Works
-We would like to impliment a Machine Learning or data science approach to this program. We can use either or both of them to make accurate predictions about a persons emotions. We also would need to get the frontend working with the backend of the application. Since the overall goal was to design an iOS application we still have to figure out the design of the actual watch UI and iOS UI. We could possibly extend this to having a feed of real time data that would be used to show how you are feeling at specific times of the day. We also still needed to look into ways of sending messages faster than using cell towers.
+We would like to impliment a Machine Learning or data science approach to this program. We can use either or both of them to make accurate predictions about a persons emotions. We also would need to get the frontend working with the backend of the application. Since the overall goal was to design an iOS application we still have to figure out the design of the actual watch UI and iOS UI. We could possibly extend this to having a feed of real time data that would be used to show how you are feeling at specific times of the day. We also still needed to look into ways of sending messages faster than using cell towers. Lastly we have to work on retrieving locational data from the user's devices.
 
+## Presentations
+[HPC Hack In Dallas Presentation](https://docs.google.com/presentation/d/1abXy7_h9DC1skeO7K38wJ-unZuZru09dNpJlH9ah9GY/edit#slide=id.g1382ab5e85d_0_138)
